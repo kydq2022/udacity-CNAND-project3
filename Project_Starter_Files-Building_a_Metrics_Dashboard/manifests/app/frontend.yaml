@@ -3,9 +3,9 @@ kind: Deployment
 metadata:
   name: frontend-app
   annotations:
-    "sidecar.jaegertracing.io/inject": "true"
+    "sidecar.jaegertracing.io/inject": "simplest"
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: frontend
@@ -17,7 +17,8 @@ spec:
       containers:
       - name: frontend
         # We advise you to build, push and use your own image, instead of using instructor's image.
-        image: ghcr.io/jasonsmithio/myfrontend:v1
+        image: kydq2022/project3-frontend:v3
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-app
   annotations:
-    "sidecar.jaegertracing.io/inject": "true"
+    "sidecar.jaegertracing.io/inject": "simplest"
 spec:
   replicas: 1
   selector:
@@ -17,7 +17,7 @@ spec:
       containers:
       - name: backend
         # We advise you to build, push and use your own image, instead of using instructor's image.      
-        image: kydq2022/project3-backend:latest
+        image: kydq2022/project3-backend:v2
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
