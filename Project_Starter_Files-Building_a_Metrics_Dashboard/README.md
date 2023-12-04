@@ -13,8 +13,44 @@
 ## Describe SLO/SLI
 *TODO:* Describe, in your own words, what the SLIs are, based on an SLO of *monthly uptime* and *request response time*.
 
+### *Monthly Uptime SLO:* 
+This could be expressed as a percentage, indicating the minimum acceptable uptime for the service within a month. For example, an SLO of 99.9% means that the service should be available and operational for at least 99.9% of the total time in a month.
+
+### *Request Response Time SLO:* 
+This could be expressed as a time duration, specifying the maximum acceptable time for the service to respond to a request. For example, an SLO of 200 milliseconds means that the service should respond to requests within 200 milliseconds on average.
+
+
 ## Creating SLI metrics.
 *TODO:* It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
+
+### Uptime Percentage:
+*Metric:* The percentage of time the service is operational within a month.
+
+*Importance:* Uptime is a fundamental measure of service reliability. Customers rely on services being available when they need them. Monitoring uptime helps ensure that the service meets customer expectations for continuous availability, contributing to a positive user experience.
+
+### Downtime Duration:
+Metric: The total duration of downtime within a month.
+
+*Importance:* Knowing not only the uptime percentage but also the actual duration of downtime provides insight into the impact of service disruptions. Minimizing downtime is critical for maintaining customer trust and preventing disruptions to their workflows.
+
+### Error Rate:
+
+*Metric:* The percentage of requests that result in errors.
+
+*Importance:* Customers expect services to handle their requests without errors. Monitoring the error rate helps identify issues that might impact the reliability of the service. A low error rate is indicative of a stable and well-functioning system, contributing to a positive user experience.
+
+### Response Time Distribution:
+
+*Metric:* A breakdown of response times, including percentiles (e.g., 95th percentile response time).
+
+*Importance:* While average response time is a common metric, understanding the distribution provides a more nuanced view. Tracking percentiles helps identify outliers and ensures that the majority of user requests are responded to within an acceptable timeframe. This is crucial for maintaining a responsive and efficient service.
+
+### Incident Resolution Time:
+
+*Metric:* The time taken to resolve incidents or outages.
+
+*Importance:* In the event of service disruptions, customers are concerned with how quickly the issues are identified and resolved. Monitoring incident resolution time helps gauge the efficiency of the support and operations teams. Faster resolution times contribute to minimizing the impact on customers and improving overall satisfaction.
+
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
