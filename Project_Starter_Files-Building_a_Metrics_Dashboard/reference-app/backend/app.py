@@ -1,9 +1,26 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 
-import pymongo
 from flask_pymongo import PyMongo
+from jaeger_client import Config
+from flask_opentracing import FlaskTracing
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info("project3_backend", "project3-backend", version="1.0.3")
+endpoint_counter = metrics.counter(
+    'by_endpoint_counter', 'Request count by endpoints',
+    labels={'endpoint': lambda: request.endpoint}
+)
+
+config = Config(config={'sampler': {'type': 'const', 'param': 1},
+                        'logging': True},
+                service_name="project3_backend")
+
+tracer = config.initialize_tracer()
+
+tracing = FlaskTracing(tracer)
+
 
 app.config["MONGO_DBNAME"] = "example-mongodb"
 app.config[
@@ -12,19 +29,24 @@ app.config[
 
 mongo = PyMongo(app)
 
-
 @app.route("/")
+@tracing.trace()
+@endpoint_counter
 def homepage():
-    return "Hello World"
+    return "kydq2022 project3 222"
 
 
 @app.route("/api")
+@tracing.trace()
+@endpoint_counter
 def my_api():
-    answer = "something"
+    answer = "kydq2022 project 3 api"
     return jsonify(repsonse=answer)
 
 
 @app.route("/star", methods=["POST"])
+@tracing.trace()
+@endpoint_counter
 def add_star():
     star = mongo.db.stars
     name = request.json["name"]
