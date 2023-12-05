@@ -127,3 +127,4 @@ The average or 95th percentile response time of my application
 
 ## Final Dashboard
 *TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.  
+![Alt text](answer-img/final-dashboard.png)
