@@ -57,38 +57,73 @@ Metric: The total duration of downtime within a month.
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
+![Alt text](answer-img/measure-SLI.png)
 
 ## Tracing our Flask App
 *TODO:*  We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here. Also provide a (screenshot) sample Python file containing a trace and span code used to perform Jaeger traces on the backend service.
-
+![Alt text](answer-img/tracing-backend-app.png)
+Code in here
+https://github.com/kydq2022/udacity-CNAND-project3/blob/develop/Project_Starter_Files-Building_a_Metrics_Dashboard/reference-app/backend/app.py
 
 ## Jaeger in Dashboards
 *TODO:* Now that the trace is running, let's add the metric to our current Grafana dashboard. Once this is completed, provide a screenshot of it here.
-![Alt text](answer-img/jaeger-dashboard.png)
+![Alt text](answer-img/grafana-jaeger-dashboard.png)
 
 ## Report Error
 *TODO:* Using the template below, write a trouble ticket for the developers, to explain the errors that you are seeing (400, 500, latency) and to let them know the file that is causing the issue also include a screenshot of the tracer span to demonstrate how we can user a tracer to locate errors easily.
 
 TROUBLE TICKET
 
-Name:
+Name: kydq2022
 
-Date:
+Date: 2023-12-06
 
-Subject:
+Subject: Can not add star
 
-Affected Area:
+Affected Area: Bacekend
 
-Severity:
+Severity: Critical
 
 Description:
+```
+kydq@LPP00078524D:~/udacity$ curl -X POST http://10.42.0.210:8080/star
+<!doctype html>
+<html lang=en>
+<title>400 Bad Request</title>
+<h1>Bad Request</h1>
+<p>The browser (or proxy) sent a request that this server could not understand.</p>
+
+```
 
 
 ## Creating SLIs and SLOs
 *TODO:* We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name four SLIs that you would use to measure the success of this SLO.
+1. Availability SLI
+2. Error Rate SLI
+3. Latency SLI
+4. Resource consumption
+
 
 ## Building KPIs for our plan
 *TODO*: Now that we have our SLIs and SLOs, create a list of 2-3 KPIs to accurately measure these metrics as well as a description of why those KPIs were chosen. We will make a dashboard for this, but first write them down here.
+1.  Resource consumption
+```
+CPU Usage
+
+Memory Usage
+```
+2. Error Rate
+```
+The percentage of requests that result in server errors
+```
+3. Throughput 
+```
+The number of requests processed successfully per second
+```
+4. Latency
+```
+The average or 95th percentile response time of my application
+```
 
 ## Final Dashboard
 *TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.  
