@@ -4,24 +4,30 @@ from flask_pymongo import PyMongo
 from jaeger_client import Config
 from flask_opentracing import FlaskTracing
 from prometheus_flask_exporter import PrometheusMetrics
+from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 app = Flask(__name__)
 # prometheus https://pypi.org/project/prometheus-flask-exporter/
-metrics = PrometheusMetrics(app)
-metrics.info('project3_backend', 'project3 backend', version='1.0.3')
+metrics = PrometheusMetrics(app, group_by="endpoint")
+metrics.info('app_info', 'Application info', version='1.0.3')
 metrics.register_default(
     metrics.counter(
         'by_path_counter', 'Request count by request paths',
         labels={'path': lambda: request.path}
     )
 )
+metrics = GunicornInternalPrometheusMetrics(app)
 
 # jaeger https://github.com/opentracing-contrib/python-flask
 config = Config(config={'sampler': {'type': 'const', 'param': 1},
                         'logging': True},
-                service_name="project3_be")
+                service_name="service_backend",
+                metrics_factory=PrometheusMetricsFactory(service_name_label="service_backend")
+                )
+
 tracer = config.initialize_tracer()
-tracing = FlaskTracing(tracer)
+tracing = FlaskTracing(tracer, True, app)
 
 app.config["MONGO_DBNAME"] = "example-mongodb"
 app.config[
@@ -31,20 +37,17 @@ app.config[
 mongo = PyMongo(app)
 
 @app.route("/")
-@tracing.trace()
 def homepage():
-    return "kydq2022 project3 222"
+    return "kydq2022 project3 222 333"
 
 
 @app.route("/api")
-@tracing.trace()
 def my_api():
-    answer = "kydq2022 project 3 api"
+    answer = "kydq2022 project 3 api 333"
     return jsonify(repsonse=answer)
 
 
 @app.route("/star", methods=["POST"])
-@tracing.trace()
 def add_star():
     star = mongo.db.stars
     name = request.json["name"]

@@ -1,11 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-app
+  name: frontend
   annotations:
-    "sidecar.jaegertracing.io/inject": "simplest"
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9090"
+    sidecar.jaegertracing.io/inject: "true"
+  labels:
+    app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -16,20 +21,43 @@ spec:
     spec:
       containers:
       - name: frontend
-        # We advise you to build, push and use your own image, instead of using instructor's image.
-        image: kydq2022/project3-frontend:v3
         imagePullPolicy: Always
+        image: kydq2022/project3-frontend:v4
         ports:
-        - containerPort: 8080
+        - name: frontendport
+          containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
+  labels:
+    app: frontend
 spec:
   selector:
     app: frontend
   ports:
-    - port: 8080
+    - name: frontend
+      port: 8080
       targetPort: 8080
   type: LoadBalancer
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: frontend
+  namespace: monitoring
+  labels:
+    app: frontend
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  endpoints:
+  - port: frontend
+    path: /metrics
+    interval: 10s
+  namespaceSelector:
+    matchNames:
+    - default
