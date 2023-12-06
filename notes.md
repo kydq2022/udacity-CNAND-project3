@@ -28,3 +28,11 @@ kubectl get deployment,svc,pods
 kubectl apply -f frontend.yaml
 kubectl get deployment,svc,pods
 ```
+
+```
+kydq2022/project3-frontend:v4
+
+sudo docker save kydq2022/project3-frontend:v4 | sudo k3s ctr images import -
+
+sudo docker save kydq2022/project3-backend:v4 | sudo k3s ctr images import -
+```

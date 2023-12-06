@@ -3,7 +3,9 @@ from flask import Flask, render_template, request
 from jaeger_client import Config
 from flask_opentracing import FlaskTracing
 from prometheus_flask_exporter import PrometheusMetrics
-from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
+
+import traceback
+import logging
 
 app = Flask(__name__)
 
@@ -20,8 +22,7 @@ metrics.register_default(
 # jaeger https://github.com/opentracing-contrib/python-flask
 config = Config(config={'sampler': {'type': 'const', 'param': 1},
                         'logging': True},
-                service_name="service_frontend",
-                metrics_factory=PrometheusMetricsFactory(service_name_label="service_frontend")
+                service_name="service_frontend"
                 )
 
 tracer = config.initialize_tracer()
@@ -35,6 +36,11 @@ def homepage():
 def test():
     return render_template("test.html")
 
+@app.route("/ex")
+def ex():
+    logging.error("demo-error-log")
+    with tracer.start_span('my-api'):
+        return render_template("testx.html")
 
 if __name__ == "__main__":
     app.run()

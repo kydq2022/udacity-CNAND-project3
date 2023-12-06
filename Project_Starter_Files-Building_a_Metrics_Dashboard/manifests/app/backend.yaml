@@ -22,7 +22,7 @@ spec:
       containers:
       - name: backend
         image: kydq2022/project3-backend:v4
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         ports:
         - name: backendport
           containerPort: 8080

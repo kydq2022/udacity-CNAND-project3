@@ -57,13 +57,13 @@ Metric: The total duration of downtime within a month.
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
-![Alt text](answer-img/measure-SLI.png)
+![Alt text](answer-img/fe-be-error-request.png)
 
 ## Tracing our Flask App
 *TODO:*  We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here. Also provide a (screenshot) sample Python file containing a trace and span code used to perform Jaeger traces on the backend service.
 ![Alt text](answer-img/tracing-backend-app.png)
-Code in here
-https://github.com/kydq2022/udacity-CNAND-project3/blob/develop/Project_Starter_Files-Building_a_Metrics_Dashboard/reference-app/backend/app.py
+
+Code in here: Project_Starter_Files-Building_a_Metrics_Dashboard/reference-app/frontend/app.py
 
 ## Jaeger in Dashboards
 *TODO:* Now that the trace is running, let's add the metric to our current Grafana dashboard. Once this is completed, provide a screenshot of it here.
@@ -78,30 +78,38 @@ Name: kydq2022
 
 Date: 2023-12-06
 
-Subject: Can not add star
+Subject: Encountered an Error
 
-Affected Area: Bacekend
+Affected Area: Frontend
 
 Severity: Critical
 
 Description:
 ```
-kydq@LPP00078524D:~/udacity$ curl -X POST http://10.42.0.210:8080/star
-<!doctype html>
-<html lang=en>
-<title>400 Bad Request</title>
-<h1>Bad Request</h1>
-<p>The browser (or proxy) sent a request that this server could not understand.</p>
-
+kydq@LPP00078524D:~/udacity$ http://192.168.1.131:8080/ex
+Internal Server Error
+The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
 ```
-
+![Alt text](answer-img/trouble-ticket.png)
 
 ## Creating SLIs and SLOs
 *TODO:* We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name four SLIs that you would use to measure the success of this SLO.
 1. Availability SLI
+```
+Monitoring the availability of a service is crucial for customer experience and business.
+```
 2. Error Rate SLI
+```
+Error Rate SLI (Service Level Indicator) is an important metric for assessing the reliability and quality of a service.
+```
 3. Latency SLI
+```
+Latency SLI (Service Level Indicator) is crucial for assessing the responsiveness and performance of a service.
+```
 4. Resource consumption
+```
+esource Consumption SLI (Service Level Indicator) is important for assessing and managing the utilization of resources within a service or system.
+```
 
 
 ## Building KPIs for our plan

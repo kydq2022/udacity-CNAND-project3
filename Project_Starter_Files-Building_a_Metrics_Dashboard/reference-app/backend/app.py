@@ -4,8 +4,6 @@ from flask_pymongo import PyMongo
 from jaeger_client import Config
 from flask_opentracing import FlaskTracing
 from prometheus_flask_exporter import PrometheusMetrics
-from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
-from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 app = Flask(__name__)
 # prometheus https://pypi.org/project/prometheus-flask-exporter/
@@ -17,13 +15,11 @@ metrics.register_default(
         labels={'path': lambda: request.path}
     )
 )
-metrics = GunicornInternalPrometheusMetrics(app)
 
 # jaeger https://github.com/opentracing-contrib/python-flask
 config = Config(config={'sampler': {'type': 'const', 'param': 1},
                         'logging': True},
-                service_name="service_backend",
-                metrics_factory=PrometheusMetricsFactory(service_name_label="service_backend")
+                service_name="service_backend"
                 )
 
 tracer = config.initialize_tracer()
@@ -38,13 +34,18 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def homepage():
-    return "kydq2022 project3 222 333"
+    return "kydq2022 project3 222 333 444"
 
 
 @app.route("/api")
 def my_api():
-    answer = "kydq2022 project 3 api 333"
+    answer = "kydq2022 project 3 api 333 444"
     return jsonify(repsonse=answer)
+
+@app.route("/ex")
+def error():
+    answer = "internal server error!"
+    return 10/0
 
 
 @app.route("/star", methods=["POST"])
